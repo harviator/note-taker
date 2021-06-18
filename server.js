@@ -17,6 +17,11 @@ app.use(express.static("public"));
 app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
 //serves the api data
 app.get('/api/notes', (req, res) => res.json(notes));
+//adds the user data
+app.post('/api/notes',(req, res) => {
+    notes.push(req.body);
+    res.json(notes);
+})
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
 // Starts server
