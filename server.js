@@ -7,7 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const notes = JSON.parse(fs.readFileSync(path.join(__dirname, '/db/db.json')));
+let notes = JSON.parse(fs.readFileSync(path.join(__dirname, '/db/db.json')));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -16,21 +16,16 @@ app.use(express.static("public"));
 // Routes
 // HTML Route
 app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
-
 // API Routes 
 app.get('/api/notes', (req, res) => res.json(notes)); 
-app.get('.api/notes/:note', (req, res ) => {
-
-    console.log(req.params.id);
-    //const currentNote = notes.filter()
-})
-//app.get to get 1 note //use a filter to filter ids
-// Note data
-app.post('/api/notes', (req, res) => { // Add new note
+//Default HTML Route
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
+// Add new note
+app.post('/api/notes', (req, res) => {
     
-    const id = uuidv1();
+    let id = uuidv1();
     
-    const newNote = {
+    let newNote = {
         id: id,
         title: req.body.title,
         text: req.body.text,
@@ -38,23 +33,41 @@ app.post('/api/notes', (req, res) => { // Add new note
     
     notes.push(newNote);
 
-    console.log(newNote);
+    fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(notes));
 
     console.log("New Note created");
+
+    res.json(notes);
 });
-app.put('api/notes', (req, res) => { // Update notes
-    // what the frick do I write here?
-});
+//
 app.delete('api/notes', (req, res) => { // Delete a note
     //what the frick do I write here?
 })
 
-//Default HTML Route
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
+
 
 // Starts server
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
 
+
+
+app.get('/api/notes/:id', (req, res ) => {
+    
+    const getNote = req.params.id;
+
+    console.log(getNote);
+
+    notes = notes.filter((notes) => {
+        if (getNote === notes.id) {
+            return res.json(notes.id);
+        } else {
+            return res.json(false);
+        }
+    });
+
+    console.log(filteredNotes);
+})
+//app.get to get 1 note //use a filter to filter ids
 /*
 
 Notes:
