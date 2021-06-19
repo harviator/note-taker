@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const uuidv1 = require('uuidv1');
+const { notStrictEqual } = require('assert');
 
 const app = express();
 
@@ -39,38 +40,22 @@ app.post('/api/notes', (req, res) => {
 
     res.json(notes);
 });
-//
-app.delete('api/notes', (req, res) => { // Delete a note
+// Delete a note
+app.delete('/api/notes/:id', (req, res) => {
     //what the frick do I write here?
+    const deleteNote = req.params.id;
+
+    notes = notes.filter((notes) => {
+        return (notes.id !== deleteNote);
+    });
+
+    fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(notes));
+
+    console.log("Note deleted");
+
+    res.send(`Deleted note: ${deleteNote}`);
+
 })
-
-
 
 // Starts server
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
-
-
-
-app.get('/api/notes/:id', (req, res ) => {
-    
-    const getNote = req.params.id;
-
-    console.log(getNote);
-
-    notes = notes.filter((notes) => {
-        if (getNote === notes.id) {
-            return res.json(notes.id);
-        } else {
-            return res.json(false);
-        }
-    });
-
-    console.log(filteredNotes);
-})
-//app.get to get 1 note //use a filter to filter ids
-/*
-
-Notes:
-    -The notes need unique ids
-
-*/
