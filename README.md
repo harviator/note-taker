@@ -56,9 +56,10 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 * Biggest challenges for this project was realizing there was missing middleware to get the notes page to render correctly.  The biggest succeses were getting the server up and running and getting the delete api to work.
 * Credit to my TA's, tutor, and classmates.
 
-## Screen Shot
+## Screen Shots
 
-![Screen Shot](./Assets/screen-shot.png)
+![Screen Shot](./public/assets/images/screen-shot.png)
+![Screen Shot 2](./public/assets/images/screen-shot2.png)
 
 ## Link
-https://harviator.github.io/oop-team-profile-generator/
+https://afternoon-fjord-14538.herokuapp.com/
