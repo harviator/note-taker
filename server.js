@@ -42,7 +42,7 @@ app.post('/api/notes', (req, res) => {
 });
 // Delete a note
 app.delete('/api/notes/:id', (req, res) => {
-    //what the frick do I write here?
+
     const deleteNote = req.params.id;
 
     notes = notes.filter((notes) => {
@@ -56,6 +56,5 @@ app.delete('/api/notes/:id', (req, res) => {
     res.send(`Deleted note: ${deleteNote}`);
 
 })
-
 // Starts server
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
